@@ -1,0 +1,10 @@
+s,e,d=map(int,input().split())
+sum=0
+for i in range(s,e):
+    if s>=0 and e>=0 and d>=0 and s<e:
+        if(i%d==0):
+            sum+=i                    
+    else:
+        print("Error")
+
+    print(sum)
