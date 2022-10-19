@@ -1,0 +1,33 @@
+(1)
+
+from datetime import date
+w=[31,28,31,30,31,30,31,31,30,31,30,31]
+a=["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Monday"]
+m,d=map(int,input().split())
+date(m,d)
+def isValidDate(m,d):
+    try:
+        date(m,d)
+    except:        
+        print("Error")
+        return False
+
+    else:
+        return True
+
+
+for i in range(1):
+    for j in range(m-1):
+        d+=w[j]
+    print(a[(d-1)%7])
+    
+    
+(2)
+import calendar
+m,d=map(int,input().split())
+a=["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Monday"]
+try:
+    w=calendar.weekday(2018,m,d)
+    print(a[w])
+except:
+    print("Error")
