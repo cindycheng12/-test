@@ -1,0 +1,12 @@
+w=[31,28,31,30,31,30,31,31,30,31,30,31] 
+a=["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Monday"] 
+ 
+while   True: 
+    m,d=map(int,input().split()) 
+    if (1<=m<=12) and (1<=d<=w[m-1]): 
+        for i in range(1): 
+            for j in range(m-1): 
+                d+=w[j] 
+            print(a[(d-1)%7]) 
+    else: 
+        print("Error")  
