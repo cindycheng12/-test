@@ -1,0 +1,10 @@
+while True:
+    s,e,d=map(int,input().split())
+    sum=0
+
+    if s<=e:
+        t=(e-s)//d
+        sum=(s+s+t*d)*(t+1)/2   #梯形公式
+        print(int(sum))
+    else:
+        print("Error")
