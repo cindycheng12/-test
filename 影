@@ -1,0 +1,24 @@
+import skimage.io as io
+from matplotlib.pyplot import figure
+import numpy as np
+from numpy.fft import ifft2
+from numpy.fft import fft2
+from numpy.fft import fftshift
+import skimage.exposure as ex
+
+m=io.imread("cameraman.png")
+cf=fftshift(fft2(m))
+
+d=15
+ar=range(-128,128)
+x,y=np.meshgrid(ar,ar)
+
+bh=1-1.0/(1.0+((x**2+y**2)/d**2)**2)
+          
+cfbh=cf*bh
+
+figure(),io.imshow(ex.rescale_intensity(abs(ifft2(cfbh)),out_range=(0.0,1.0)))  
+
+cfgLog=np.log(1+abs(cfbh))
+figure(),io.imshow(ex.rescale_intensity(cfgLog,out_range=(0.0,1.0)))        
+    
