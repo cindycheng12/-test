@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  2 10:52:00 2022
+
+@author: cindy
+"""
+
+import skimage.io as io
+import skimage.color as co
+import skimage.util.noise as noise
+from matplotlib.pyplot import figure
+g=co.rgb2gray(io.imread('gull.png'))
+figure(), io.imshow(g)
+gn=noise.random_noise(g,mode='s&p')
+figure(), io.imshow(gn)
+gn2=noise.random_noise(g,mode='s&p',amount=0.2)
+figure(), io.imshow(gn2)
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  2 11:27:46 2022
+
+@author: cindy
+"""
+import skimage.io as io
+import skimage.color as co
+import skimage.util.noise as noise
+from matplotlib.pyplot import figure
+g=co.rgb2gray(io.imread('gull.png'))
+
+gn=noise.random_noise(g,mode='s&p')
+
+gn2=noise.random_noise(g,mode='s&p',amount=0.2)
+
+
+import scipy.ndimage as ndi
+
+gm4=ndi.median_filter(gn2,3)
+figure(), io.imshow(gm4)
+gm5=ndi.median_filter(gm4,3)
+figure(), io.imshow(gm5)
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  2 11:36:24 2022
+
+@author: cindy
+"""
+
+import skimage.io as io
+import skimage.color as co
+import skimage.util.noise as noise
+from matplotlib.pyplot import figure
+import numpy as np
+import scipy.ndimage as ndi
+g=co.rgb2gray(io.imread('gull.png'))
+figure(), io.imshow(g)
+gn2=noise.random_noise(g,mode='s&p',amount=0.2)
+figure(), io.imshow(gn2)
+
+cross=np.array([[0,1,0],[1,1,1],[0,1,0]])
+gco=ndi.median_filter(gn2,footprint=cross)
+figure(), io.imshow(gco)
