@@ -63,3 +63,31 @@ figure(), io.imshow(gn2)
 cross=np.array([[0,1,0],[1,1,1],[0,1,0]])
 gco=ndi.median_filter(gn2,footprint=cross)
 figure(), io.imshow(gco)
+
+#去除高斯
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import skimage.io as io
+import numpy as np
+from matplotlib.pyplot import figure
+import skimage.color as co
+import skimage.util.noise as noise
+g=co.rgb2gray(io.imread('gull.png'))
+x,y=g.shape
+t=np.zeros((x,y,10))
+for i in range(10):
+    t[:,:,i]=noise.random_noise(g,'gaussian')
+ta=np.mean(t,2)
+figure(),io.imshow(ta)
+
+
+t2=np.zeros((x,y,100))
+for i in range(100):
+    t2[:,:,i]=noise.random_noise(g,'gaussian')
+t2a=np.mean(t2,2)
+figure(),io.imshow(t2a)
