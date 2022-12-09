@@ -91,3 +91,39 @@ for i in range(100):
     t2[:,:,i]=noise.random_noise(g,'gaussian')
 t2a=np.mean(t2,2)
 figure(),io.imshow(t2a)
+
+
+#帶拒濾波器
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import skimage.io as io
+import numpy as np
+import skimage.color as co
+from numpy.fft import ifft2
+from numpy.fft import fft2
+from numpy.fft import fftshift
+from matplotlib.pyplot import figure
+from skimage.util import img_as_float
+import skimage.exposure as ex
+g=co.rgb2gray(io.imread('gull.png'))
+r,c=g.shape
+x,y=np.mgrid[0:r,0:c].astype('float32')
+p=np.sin(x/3+y/5)+1.0
+gp=(2*img_as_float(g)+p/2)/3
+gf=fftshift(fft2(gp))
+cfgLog=np.log(1+abs(gf))
+figure(),io.imshow(ex.rescale_intensity(cfgLog,out_range=(0.0,1.0)))  
+
+       
+z=np.sqrt((x-200)**2+(y-200)**2)
+k=1
+d=np.sqrt(610.0)
+br=(z<np.floor(d-k)) | (z>np.ceil(d+k))
+gfr=gf*br
+gfri=ifft2(gfr)
+figure(),io.imshow(ex.rescale_intensity(abs(ifft2(gfr)),out_range=(0.0,1.0)))
