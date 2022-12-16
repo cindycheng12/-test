@@ -127,3 +127,37 @@ br=(z<np.floor(d-k)) | (z>np.ceil(d+k))
 gfr=gf*br
 gfri=ifft2(gfr)
 figure(),io.imshow(ex.rescale_intensity(abs(ifft2(gfr)),out_range=(0.0,1.0)))
+
+
+
+#去除動態模糊
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import skimage.io as io
+import numpy as np
+from numpy.fft import ifft2
+from numpy.fft import fft2
+
+from matplotlib.pyplot import figure
+import skimage.util as ut
+import skimage.exposure as ex
+import scipy.ndimage as ndi
+
+c=io.imread('car.png')
+m=np.ones((1,7))/7
+cm=ndi.correlate(c,m)
+figure(),io.imshow(cm)
+
+d=0.02
+m2=np.zeros_like(c)*1.0
+m2[0,0:7]=m
+mf2=fft2(m2)
+mf2[np.where(abs(mf2)<d)]=1
+bmi2=abs(ifft2(fft2(cm)/mf2))
+bmu=ut.img_as_ubyte(bmi2/bmi2.max())
+io.imshow(ex.rescale_intensity(bmu,in_range=(0,128)))
