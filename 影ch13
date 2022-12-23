@@ -45,8 +45,6 @@ Spyder Editor
 
 This is a temporary script file.
 """
-
-
 import skimage.io as io
 import numpy as np
 import skimage.exposure as ex
