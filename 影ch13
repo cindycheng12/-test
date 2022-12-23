@@ -60,3 +60,27 @@ sh=co.rgb2hsv(s)
 sh[:,:,2]=ex.equalize_hist(sh[:,:,2])
 s3=co.hsv2rgb(sh)
 figure(),io.imshow(s3)
+
+
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+
+import skimage.io as io
+import numpy as np
+import skimage.exposure as ex
+from matplotlib.pyplot import figure
+import skimage.color as co
+from scipy.ndimage import filters as fl
+v=io.imread("venice.png")
+vg=co.rgb2gray(v)
+vel=fl.sobel(vg)>0.11
+
+v2=np.zero_like(v)
+for i in range(3):
+    v2[:,:,i]=fl.sobel(v[:,:,i])>0.11
+ve2=(v2[:,:,0]+v2[:,:,1]+v2[:,:,2])>0
