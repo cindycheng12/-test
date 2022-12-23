@@ -15,3 +15,23 @@ newxyz=xyz/sums[:,np.newaxis]
 x=newxyz[:,0];x1=np.hstack((x,x[0]))
 y=newxyz[:,1];y1=np.hstack((y,y[0]))
 plt.plot(x1,y1)
+
+
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import matplotlib.pyplot as plt
+import skimage.io as io
+import numpy as np
+import skimage.color as co
+x=io.imread("twins.jpg")
+xh=co.rgb2hsv(x)
+for i in range(3):
+    plt.figure(i),io.imshow(x[:,:,0])  #紅
+    plt.figure(i),io.imshow(x[:,:,1])  #綠
+    plt.figure(i),io.imshow(x[:,:,2])  #藍
+    plt.figure(i),io.imshow(xh[:,:,i])  #色調、飽和度、明暗度
