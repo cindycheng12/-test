@@ -35,3 +35,30 @@ for i in range(3):
     plt.figure(i),io.imshow(x[:,:,1])  #綠
     plt.figure(i),io.imshow(x[:,:,2])  #藍
     plt.figure(i),io.imshow(xh[:,:,i])  #色調、飽和度、明暗度
+
+
+
+#加強對比
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+
+import skimage.io as io
+import numpy as np
+import skimage.exposure as ex
+from matplotlib.pyplot import figure
+s=io.imread("color_sunset.png").astype("float64")
+s2=np.zeros_like(s)
+for i in range(3):
+    s2[:,:,i]=ex.equalize_hist(s[:,:,i])
+figure(),io.imshow(s2)
+#HSV
+import skimage.color as co
+sh=co.rgb2hsv(s)
+sh[:,:,2]=ex.equalize_hist(sh[:,:,2])
+s3=co.hsv2rgb(sh)
+figure(),io.imshow(s3)
