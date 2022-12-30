@@ -1,0 +1,26 @@
+#侵蝕與膨脹
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec 30 10:54:37 2022
+
+@author: CJCU-User
+"""
+
+import skimage.io as io
+from matplotlib.pyplot import figure
+from skimage.morphology import binary_erosion as bwerode
+import numpy as np
+from skimage.morphology import binary_dilation as bwdilate
+n=io.imread("pinenuts.png")
+p= ~((n>130)&(n<165))
+sq=np.ones((3,3))
+pe=bwerode(p,sq)
+p_int= p^pe
+io.imshow(p)
+f=figure() ;f.show(io.imshow(p^pe))
+
+pd=bwdilate(p,sq)
+p_exp=pd^p
+p_grad=pd^pe
+io.imshow(p_exp)
+fi=figure();fi.show(io.imshow(p_grad))
