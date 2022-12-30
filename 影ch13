@@ -84,3 +84,32 @@ v2=np.zero_like(v)
 for i in range(3):
     v2[:,:,i]=fl.sobel(v[:,:,i])>0.11
 ve2=(v2[:,:,0]+v2[:,:,1]+v2[:,:,2])>0
+
+
+#Retinex演算
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import skimage.io as io
+import numpy as np
+import skimage.color as co
+import skimage.exposure as ex
+
+from numpy.fft import ifft2
+from numpy.fft import fft2
+from skimage.util import img_as_float
+s=img_as_float(co.rgb2gray(io.imread("street.png")))
+s1=ex.rescale_intensity(s,out_range=(0,1))+0.01
+io.imshow(s,cmap="gray")
+r,c=s.shape
+i,j=np.mgrid[-(r//2):(r+1)//2,-(c//2):(c+1)//2]
+f=np.exp(-(i**2+j**2)/40**2)
+sf=abs(ifft2(ifft2(s1)*fft2(f)))
+
+sf[np.where(sf==0)]=0.01
+s2=np.log(s1)-np.log(sf)
+io.imshow(s2,cmap="gray")
